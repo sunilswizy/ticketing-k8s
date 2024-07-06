@@ -21,7 +21,7 @@ router.post('/api/users/signup', validator, validateRequest, async (req: Request
         email
     });
 
-    if(existingUsers) {
+    if (existingUsers) {
         throw new BadRequestError('Email is already in use');
     };
 

@@ -16,20 +16,18 @@ const validations = [
 router.post('/api/users/signin', validations, validateRequest, async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
-    
-    console.log("Email")
 
-    const exitingUser = await Users.findOne({ 
+    const exitingUser = await Users.findOne({
         email
     });
 
-    if(!exitingUser) {
+    if (!exitingUser) {
         throw new BadRequestError('Invalid Credentails');
     };
 
     const passwordMatch = await Password.compare(exitingUser.password, password);
 
-    if(!passwordMatch) {
+    if (!passwordMatch) {
         throw new BadRequestError('Email and password don"t match');
     }
 

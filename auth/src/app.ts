@@ -4,8 +4,7 @@ import { currentUserRouter } from './routes/current-user';
 import { signoutRouter } from './routes/signout';
 import { signinRouter } from './routes/signin';
 import { signupRouter } from './routes/signup';
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from './errors/not-found-error';
+import { NotFoundError, errorHandler } from '@swizy-packages/common';
 import cookieSession from 'cookie-session'
 
 const app = express();

@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { validateRequest } from '../middlewares/validate-request';
+import { validateRequest, BadRequestError} from '@swizy-packages/common';
 import { Users } from '../models/users';
-import { BadRequestError } from '../errors/bad-request-error';
 import { Password } from '../services/password';
 import { sign } from 'jsonwebtoken';
 

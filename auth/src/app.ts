@@ -13,8 +13,11 @@ app.use(express.json());
 app.set('trust proxy', true);
 app.use(
     cookieSession({
+        name: 'cookie',
         signed: false,
-        secure: process.env.NODE_ENV != 'test'
+        secure: process.env.NODE_ENV != 'test',
+        sameSite: 'lax',
+        httpOnly: true
     })
 );
 

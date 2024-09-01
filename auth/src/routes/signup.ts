@@ -40,7 +40,7 @@ router.post('/api/users/signup', validator, validateRequest, async (req: Request
     req.session = {
         jwt: userJWT
     };
-
+    
 
     res.status(200).send(user);
 });

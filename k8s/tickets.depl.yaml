@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
-  name: auth-depl
+  name: tickets-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-        app: auth
+        app: tickets
   template:
     metadata:
       labels: 
-        app: auth
+        app: tickets
     spec: 
       containers:
-        - image: sunil1912/auth
-          name: auth
+        - image: sunil1912/tickets
+          name: tickets
           env:
             - name: JWT_KEY
               valueFrom:
@@ -22,7 +22,7 @@ spec:
                   name: jwt-secret
                   key: JWT_KEY
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/auth'
+              value: 'mongodb://tickets-mongo-srv:27017/tickets'
           resources:
             limits:
               memory: 512Mi
@@ -36,13 +36,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata: 
-  name: auth-srv
+  name: tickets-srv
 spec: 
   type: ClusterIP
   selector:
-    app: auth
+    app: tickets
   ports:
     - protocol: TCP
-      name: auth
+      name: tickets
       port: 3000
       targetPort: 3000

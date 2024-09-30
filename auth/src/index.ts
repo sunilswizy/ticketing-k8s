@@ -5,7 +5,7 @@ const PORT = 3000;
 
 
 const initializeMongo = async () => {
-    await mongoose.connect(process.env.MONGO_URL!)
+    await mongoose.connect(process.env.MONGO_URI!)
         .then((res) => {
             console.log("Connected");
     })

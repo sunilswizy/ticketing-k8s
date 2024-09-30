@@ -20,6 +20,7 @@ it('It can only be accessed if the user is authenticated', async () => {
 });
 
 it('It can access if user is authenticated', async () => {
+    console.log("cookie", global.signUp());
     const response = await request(app)
         .post('/api/tickets')
         .set('Cookie', global.signUp())

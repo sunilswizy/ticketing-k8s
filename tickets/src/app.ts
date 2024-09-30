@@ -11,12 +11,14 @@ const app = express();
 app.use(express.json());
 
 app.set('trust proxy', true);
-app.use(
-    cookieSession({
-        signed: false,
-        secure: process.env.NODE_ENV != 'test',
-    })
-);
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['secretKey1', 'secretKey2'],
+    maxAge: 24 * 60 * 60 * 1000,  
+    httpOnly: true,
+    secure: false                  
+}));
 app.use(currentUser)
 
 app.use(createTicketRouter);

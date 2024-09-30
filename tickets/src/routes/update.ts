@@ -2,11 +2,16 @@ import { Request, Response, Router } from "express";
 import { requireAuth, validateRequest, NotFoundError, NotAuthorizedError } from "@swizy-packages/common";
 import { Ticket } from "../models/tickets";
 import { body } from "express-validator";
+import { TicketUpdatedPublisher } from "../events/publisher/ticket-update-publisher";
+import { natsWrapper } from "../nats-wrapper";
 
 
 const validations = [
     body('title').trim().notEmpty().withMessage("Enter Title"),
-    body('price').isFloat({ gt: 0 }).withMessage("Price Must be greater then 0")
+    body('price')
+        .notEmpty().withMessage("Price is required")
+        .isNumeric().withMessage("Price must be a number")
+        .isFloat({ gt: 0 }).withMessage("Price must be greater than 0")
 ];
 
 const router = Router();
@@ -29,6 +34,13 @@ router.put('/api/tickets/:id', requireAuth, validations, validateRequest, async 
     });
 
     await ticket.save();
+
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId
+    });
 
     res.status(200).send(ticket);
 });
